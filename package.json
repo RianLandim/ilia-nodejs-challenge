@@ -1,0 +1,29 @@
+{
+  "name": "ilia-nodejs-challenge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monorepo com microserviços NestJS + gRPC e frontend Next.js",
+  "homepage": "https://github.com/RianLandim/ilia-nodejs-challenge#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RianLandim/ilia-nodejs-challenge.git"
+  },
+  "license": "ISC",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "dev:services": "turbo run dev --filter='./apps/ms-*'",
+    "dev:web": "turbo run dev --filter=@ilia/web",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "test:cov": "turbo run test:cov",
+    "format": "turbo run format",
+    "proto:generate": "turbo run proto:generate",
+    "clean": "turbo run clean",
+    "check-types": "turbo run check-types"
+  },
+  "devDependencies": {
+    "turbo": "^2.8.5"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
