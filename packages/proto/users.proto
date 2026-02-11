@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package users;
+
+service UsersService {
+  rpc CreateUser (CreateUserRequest) returns (UserResponse);
+  rpc FindAllUsers (Empty) returns (UserListResponse);
+  rpc FindOneUser (FindOneUserRequest) returns (UserResponse);
+  rpc UpdateUser (UpdateUserRequest) returns (UserResponse);
+  rpc DeleteUser (FindOneUserRequest) returns (Empty);
+  rpc Authenticate (AuthenticateRequest) returns (AuthenticateResponse);
+  rpc ValidateToken (ValidateTokenRequest) returns (ValidateTokenResponse);
+}
+
+message Empty {}
+
+message CreateUserRequest {
+  string first_name = 1;
+  string last_name = 2;
+  string email = 3;
+  string password = 4;
+}
+
+message UpdateUserRequest {
+  string id = 1;
+  optional string first_name = 2;
+  optional string last_name = 3;
+  optional string email = 4;
+  optional string password = 5;
+}
+
+message FindOneUserRequest {
+  string id = 1;
+}
+
+message UserResponse {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+}
+
+message UserListResponse {
+  repeated UserResponse users = 1;
+}
+
+message AuthenticateRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message AuthenticateResponse {
+  UserResponse user = 1;
+  string access_token = 2;
+}
+
+message ValidateTokenRequest {
+  string access_token = 1;
+}
+
+message ValidateTokenResponse {
+  bool is_valid = 1;
+  string user_id = 2;
+}
