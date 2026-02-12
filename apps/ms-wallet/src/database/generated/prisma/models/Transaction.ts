@@ -36,18 +36,21 @@ export type TransactionSumAggregateOutputType = {
 
 export type TransactionMinAggregateOutputType = {
   id: string | null
+  userId: string | null
   type: $Enums.TranstactionType | null
   amount: number | null
 }
 
 export type TransactionMaxAggregateOutputType = {
   id: string | null
+  userId: string | null
   type: $Enums.TranstactionType | null
   amount: number | null
 }
 
 export type TransactionCountAggregateOutputType = {
   id: number
+  userId: number
   type: number
   amount: number
   _all: number
@@ -64,18 +67,21 @@ export type TransactionSumAggregateInputType = {
 
 export type TransactionMinAggregateInputType = {
   id?: true
+  userId?: true
   type?: true
   amount?: true
 }
 
 export type TransactionMaxAggregateInputType = {
   id?: true
+  userId?: true
   type?: true
   amount?: true
 }
 
 export type TransactionCountAggregateInputType = {
   id?: true
+  userId?: true
   type?: true
   amount?: true
   _all?: true
@@ -169,6 +175,7 @@ export type TransactionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type TransactionGroupByOutputType = {
   id: string
+  userId: string
   type: $Enums.TranstactionType
   amount: number
   _count: TransactionCountAggregateOutputType | null
@@ -198,12 +205,14 @@ export type TransactionWhereInput = {
   OR?: Prisma.TransactionWhereInput[]
   NOT?: Prisma.TransactionWhereInput | Prisma.TransactionWhereInput[]
   id?: Prisma.StringFilter<"Transaction"> | string
+  userId?: Prisma.StringFilter<"Transaction"> | string
   type?: Prisma.EnumTranstactionTypeFilter<"Transaction"> | $Enums.TranstactionType
   amount?: Prisma.FloatFilter<"Transaction"> | number
 }
 
 export type TransactionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   amount?: Prisma.SortOrder
 }
@@ -213,12 +222,14 @@ export type TransactionWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.TransactionWhereInput | Prisma.TransactionWhereInput[]
   OR?: Prisma.TransactionWhereInput[]
   NOT?: Prisma.TransactionWhereInput | Prisma.TransactionWhereInput[]
+  userId?: Prisma.StringFilter<"Transaction"> | string
   type?: Prisma.EnumTranstactionTypeFilter<"Transaction"> | $Enums.TranstactionType
   amount?: Prisma.FloatFilter<"Transaction"> | number
 }, "id">
 
 export type TransactionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   _count?: Prisma.TransactionCountOrderByAggregateInput
@@ -233,54 +244,63 @@ export type TransactionScalarWhereWithAggregatesInput = {
   OR?: Prisma.TransactionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TransactionScalarWhereWithAggregatesInput | Prisma.TransactionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
+  userId?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
   type?: Prisma.EnumTranstactionTypeWithAggregatesFilter<"Transaction"> | $Enums.TranstactionType
   amount?: Prisma.FloatWithAggregatesFilter<"Transaction"> | number
 }
 
 export type TransactionCreateInput = {
   id?: string
+  userId: string
   type?: $Enums.TranstactionType
   amount: number
 }
 
 export type TransactionUncheckedCreateInput = {
   id?: string
+  userId: string
   type?: $Enums.TranstactionType
   amount: number
 }
 
 export type TransactionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTranstactionTypeFieldUpdateOperationsInput | $Enums.TranstactionType
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type TransactionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTranstactionTypeFieldUpdateOperationsInput | $Enums.TranstactionType
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type TransactionCreateManyInput = {
   id?: string
+  userId: string
   type?: $Enums.TranstactionType
   amount: number
 }
 
 export type TransactionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTranstactionTypeFieldUpdateOperationsInput | $Enums.TranstactionType
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type TransactionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTranstactionTypeFieldUpdateOperationsInput | $Enums.TranstactionType
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type TransactionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   amount?: Prisma.SortOrder
 }
@@ -291,12 +311,14 @@ export type TransactionAvgOrderByAggregateInput = {
 
 export type TransactionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   amount?: Prisma.SortOrder
 }
 
 export type TransactionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   amount?: Prisma.SortOrder
 }
@@ -325,35 +347,40 @@ export type FloatFieldUpdateOperationsInput = {
 
 export type TransactionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  userId?: boolean
   type?: boolean
   amount?: boolean
 }, ExtArgs["result"]["transaction"]>
 
 export type TransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  userId?: boolean
   type?: boolean
   amount?: boolean
 }, ExtArgs["result"]["transaction"]>
 
 export type TransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  userId?: boolean
   type?: boolean
   amount?: boolean
 }, ExtArgs["result"]["transaction"]>
 
 export type TransactionSelectScalar = {
   id?: boolean
+  userId?: boolean
   type?: boolean
   amount?: boolean
 }
 
-export type TransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "amount", ExtArgs["result"]["transaction"]>
+export type TransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "type" | "amount", ExtArgs["result"]["transaction"]>
 
 export type $TransactionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Transaction"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    userId: string
     type: $Enums.TranstactionType
     amount: number
   }, ExtArgs["result"]["transaction"]>
@@ -780,6 +807,7 @@ export interface Prisma__TransactionClient<T, Null = never, ExtArgs extends runt
  */
 export interface TransactionFieldRefs {
   readonly id: Prisma.FieldRef<"Transaction", 'String'>
+  readonly userId: Prisma.FieldRef<"Transaction", 'String'>
   readonly type: Prisma.FieldRef<"Transaction", 'TranstactionType'>
   readonly amount: Prisma.FieldRef<"Transaction", 'Float'>
 }

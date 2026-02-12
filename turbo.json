@@ -8,7 +8,7 @@
       "env": ["NODE_ENV", "DATABASE_URL", "GRPC_*"]
     },
     "dev": {
-      "dependsOn": ["proto:generate"],
+      "dependsOn": ["^build", "proto:generate"],
       "persistent": true,
       "cache": false
     },
