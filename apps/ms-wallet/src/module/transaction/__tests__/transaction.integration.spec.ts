@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import request from 'supertest';
 import { TransactionModule } from '../transaction.module';
 import { DatabaseService } from 'src/config/database.config';
@@ -29,7 +30,13 @@ describe('TransactionController (integration)', () => {
     } as unknown as DatabaseService;
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [TransactionModule],
+      imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [() => ({ JWT_INTERNAL_SECRET: 'test-internal-secret' })],
+        }),
+        TransactionModule,
+      ],
     })
       .overrideProvider(DatabaseService)
       .useValue(mockDatabaseService)
