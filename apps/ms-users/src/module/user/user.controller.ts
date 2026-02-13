@@ -22,6 +22,7 @@ import { ListUsersUseCase } from './usecase/list-users.usecase';
 import { GetUserUseCase } from './usecase/get-user.usecase';
 import { UpdateUserUseCase } from './usecase/update-user.usecase';
 import { DeleteUserUseCase } from './usecase/delete-user.usecase';
+import { GetUserTransactionsUseCase } from './usecase/get-user-transactions.usecase';
 
 @Controller('users')
 export class UserController {
@@ -31,6 +32,7 @@ export class UserController {
     private getUserUseCase: GetUserUseCase,
     private updateUserUseCase: UpdateUserUseCase,
     private deleteUserUseCase: DeleteUserUseCase,
+    private getUserTransactionsUseCase: GetUserTransactionsUseCase,
   ) {}
 
   @Post()
@@ -57,6 +59,12 @@ export class UserController {
     @Body(new ZodValidationPipe(updateUserSchema)) data: UpdateUserDto,
   ) {
     return await this.updateUserUseCase.execute(id, data);
+  }
+
+  @Get(':id/transactions')
+  @UseGuards(JwtAuthGuard)
+  async getTransactions(@Param('id') id: string) {
+    return await this.getUserTransactionsUseCase.execute(id);
   }
 
   @Delete(':id')

@@ -5,6 +5,7 @@ import request from 'supertest';
 import { UserModule } from '../user.module';
 import { DatabaseService } from 'src/config/database.config';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { GetUserTransactionsUseCase } from '../usecase/get-user-transactions.usecase';
 import * as bcrypt from 'bcrypt';
 
 jest.mock('bcrypt', () => ({
@@ -15,6 +16,7 @@ jest.mock('bcrypt', () => ({
 describe('UserController and AuthController (integration)', () => {
   let app: INestApplication;
   let mockDatabaseService: any;
+  let mockGetUserTransactionsUseCase: jest.Mocked<GetUserTransactionsUseCase>;
 
   const mockUsers = [
     {
@@ -69,18 +71,28 @@ describe('UserController and AuthController (integration)', () => {
       },
     } as unknown as DatabaseService;
 
+    mockGetUserTransactionsUseCase = {
+      execute: jest.fn().mockResolvedValue([
+        { id: 'tx-1', user_id: 'user-1', amount: 100, type: 'CREDIT' },
+        { id: 'tx-2', user_id: 'user-1', amount: 50, type: 'DEBIT' },
+      ]),
+      onModuleInit: jest.fn(),
+    } as any;
+
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
           envFilePath: '.env.test',
-          load: [() => ({ JWT_SECRET: 'test-secret', DATABASE_URL: 'test-db' })],
+          load: [() => ({ JWT_SECRET: 'test-secret', DATABASE_URL: 'test-db', JWT_INTERNAL_SECRET: 'test-internal' })],
         }),
         UserModule,
       ],
     })
       .overrideProvider(DatabaseService)
       .useValue(mockDatabaseService)
+      .overrideProvider(GetUserTransactionsUseCase)
+      .useValue(mockGetUserTransactionsUseCase)
       .overrideGuard(JwtAuthGuard)
       .useValue({
         canActivate: (context: any) => {
@@ -273,6 +285,30 @@ describe('UserController and AuthController (integration)', () => {
         .patch('/users/non-existent')
         .send({ first_name: 'Updated' })
         .expect(404);
+    });
+  });
+
+  describe('GET /users/:id/transactions - Get User Transactions', () => {
+    it('should return user transactions from wallet service', async () => {
+      const res = await request(app.getHttpServer())
+        .get('/users/user-1/transactions')
+        .expect(200);
+
+      expect(res.body).toEqual([
+        { id: 'tx-1', user_id: 'user-1', amount: 100, type: 'CREDIT' },
+        { id: 'tx-2', user_id: 'user-1', amount: 50, type: 'DEBIT' },
+      ]);
+      expect(mockGetUserTransactionsUseCase.execute).toHaveBeenCalledWith('user-1');
+    });
+
+    it('should return empty array when user has no transactions', async () => {
+      mockGetUserTransactionsUseCase.execute.mockResolvedValueOnce([]);
+
+      const res = await request(app.getHttpServer())
+        .get('/users/user-1/transactions')
+        .expect(200);
+
+      expect(res.body).toEqual([]);
     });
   });
 

@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { ClientsModule } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
+import { GRPC_WALLET_CLIENT, walletGrpcClientOptions } from '@ilia/grpc';
 import { UserController } from './user.controller';
 import { AuthController } from './auth.controller';
 import { UserRepository } from './repository/user.repository';
@@ -13,6 +15,7 @@ import { GetUserUseCase } from './usecase/get-user.usecase';
 import { UpdateUserUseCase } from './usecase/update-user.usecase';
 import { DeleteUserUseCase } from './usecase/delete-user.usecase';
 import { AuthUseCase } from './usecase/auth.usecase';
+import { GetUserTransactionsUseCase } from './usecase/get-user-transactions.usecase';
 import { JwtStrategy } from '../../common/strategies/jwt.strategy';
 
 @Module({
@@ -25,6 +28,12 @@ import { JwtStrategy } from '../../common/strategies/jwt.strategy';
         signOptions: { expiresIn: '7d' },
       }),
     }),
+    ClientsModule.register([
+      {
+        name: GRPC_WALLET_CLIENT,
+        ...walletGrpcClientOptions,
+      },
+    ]),
   ],
   controllers: [UserController, AuthController],
   providers: [
@@ -36,6 +45,7 @@ import { JwtStrategy } from '../../common/strategies/jwt.strategy';
     UpdateUserUseCase,
     DeleteUserUseCase,
     AuthUseCase,
+    GetUserTransactionsUseCase,
     {
       provide: UserRepository,
       useClass: PrismaUserRepository,
