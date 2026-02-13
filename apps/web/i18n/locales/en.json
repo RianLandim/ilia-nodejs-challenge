@@ -1,0 +1,53 @@
+{
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Enter your credentials",
+    "registerTitle": "Create account",
+    "registerSubtitle": "Fill in the details to create your account",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "loginError": "Invalid email or password",
+    "registerError": "Error creating account"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "balance": "Balance",
+    "recentTransactions": "Recent Transactions",
+    "viewAll": "View all",
+    "quickActions": "Quick Actions",
+    "newTransaction": "New Transaction",
+    "noTransactions": "No transactions found"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "new": "New Transaction",
+    "type": "Type",
+    "amount": "Amount",
+    "date": "Date",
+    "credit": "Credit",
+    "debit": "Debit",
+    "filter": "Filter",
+    "all": "All",
+    "createTitle": "Create Transaction",
+    "createSuccess": "Transaction created successfully",
+    "createError": "Error creating transaction",
+    "empty": "No transactions found"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  }
+}
