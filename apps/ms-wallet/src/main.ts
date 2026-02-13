@@ -1,13 +1,21 @@
 import { NestFactory } from '@nestjs/core';
+import { Logger } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { walletGrpcServerOptions } from '@ilia/grpc';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice(
-    AppModule,
-    walletGrpcServerOptions,
-  );
-  await app.listen();
-  console.log('MS-Wallet gRPC microservice is running on:', walletGrpcServerOptions.options?.url);
+  const logger = new Logger('Bootstrap');
+
+  const app = await NestFactory.create(AppModule);
+
+  app.connectMicroservice(walletGrpcServerOptions);
+
+  await app.startAllMicroservices();
+
+  const port = process.env.PORT || 3001;
+  await app.listen(port);
+
+  logger.log(`HTTP server running on port ${port}`);
+  logger.log(`gRPC server running on ${walletGrpcServerOptions.options?.url}`);
 }
 bootstrap();

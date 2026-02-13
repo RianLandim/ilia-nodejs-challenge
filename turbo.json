@@ -1,6 +1,7 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "globalDependencies": ["**/.env"],
+  "ui": "tui",
   "tasks": {
     "build": {
       "dependsOn": ["^build", "proto:generate"],
@@ -8,7 +9,7 @@
       "env": ["NODE_ENV", "DATABASE_URL", "GRPC_*"]
     },
     "dev": {
-      "dependsOn": ["proto:generate"],
+      "dependsOn": ["^build", "proto:generate"],
       "persistent": true,
       "cache": false
     },
