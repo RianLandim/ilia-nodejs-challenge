@@ -18,3 +18,11 @@ export const createTransactionSchema = z.object({
 });
 
 export type CreateTransactionDto = z.infer<typeof createTransactionSchema>;
+
+export const listTransactionsQuerySchema = z.object({
+  type: transactionTypeSchema.optional(),
+});
+
+export type ListTransactionsQueryDto = z.infer<
+  typeof listTransactionsQuerySchema
+>;

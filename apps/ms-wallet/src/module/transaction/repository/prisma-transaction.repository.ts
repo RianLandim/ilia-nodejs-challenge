@@ -18,4 +18,17 @@ export class PrismaTransactionRepository implements TransactionRepository {
   }
 
   async getBalance(): Promise<void> {}
+
+  async findByUserId(
+    userId: string,
+    filter?: { type?: 'CREDIT' | 'DEBIT' },
+  ) {
+    return this.databaseService.transaction.findMany({
+      where: {
+        userId,
+        ...(filter?.type && { type: filter.type }),
+      },
+      orderBy: { id: 'asc' },
+    });
+  }
 }
