@@ -31,8 +31,8 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="w-64 border-r bg-muted/10 min-h-[calc(100vh-4rem)]">
-      <nav className="p-4 space-y-2">
+    <aside className="w-64 border-r border-border/80 bg-muted/30 min-h-[calc(100vh-4rem)]">
+      <nav className="p-4 space-y-1">
         {navigation.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
@@ -42,10 +42,10 @@ export function Sidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200',
                 isActive
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-muted text-muted-foreground hover:text-foreground'
+                  ? 'bg-primary text-primary-foreground shadow-sm'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
               )}
             >
               <Icon className="h-5 w-5" />

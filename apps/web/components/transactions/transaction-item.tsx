@@ -15,12 +15,16 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
   const isCredit = transaction.type === 'CREDIT';
 
   return (
-    <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+    <div className="flex items-center justify-between p-4 border border-border/80 rounded-xl hover:bg-muted/40 transition-all duration-200">
       <div className="flex items-center gap-3">
         {isCredit ? (
-          <ArrowUpCircle className="h-5 w-5 text-green-500" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+            <ArrowUpCircle className="h-5 w-5 text-primary" />
+          </div>
         ) : (
-          <ArrowDownCircle className="h-5 w-5 text-red-500" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-destructive/10">
+            <ArrowDownCircle className="h-5 w-5 text-destructive" />
+          </div>
         )}
         <div>
           <Badge variant={isCredit ? 'default' : 'secondary'}>
@@ -33,7 +37,7 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
           )}
         </div>
       </div>
-      <p className={`font-semibold ${isCredit ? 'text-green-600' : 'text-red-600'}`}>
+      <p className={`font-semibold tabular-nums ${isCredit ? 'text-primary' : 'text-destructive'}`}>
         {isCredit ? '+' : '-'}{formatCurrency(transaction.amount)}
       </p>
     </div>

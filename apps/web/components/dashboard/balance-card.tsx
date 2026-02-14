@@ -11,17 +11,17 @@ export function BalanceCard() {
   const { data, isLoading, error } = useBalance();
 
   return (
-    <Card>
+    <Card className="border-primary/10">
       <CardHeader>
-        <CardTitle>{t('balance')}</CardTitle>
+        <CardTitle className="text-muted-foreground font-medium">{t('balance')}</CardTitle>
       </CardHeader>
       <CardContent>
         {isLoading ? (
-          <Skeleton className="h-12 w-48" />
+          <Skeleton className="h-14 w-56 rounded-lg" />
         ) : error ? (
-          <p className="text-red-500 text-sm">Erro ao carregar saldo</p>
+          <p className="text-destructive text-sm">Erro ao carregar saldo</p>
         ) : (
-          <p className="text-4xl font-bold">
+          <p className="text-4xl font-bold tracking-tight text-primary tabular-nums">
             {formatCurrency(data?.balance ?? 0)}
           </p>
         )}
