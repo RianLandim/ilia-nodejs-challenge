@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { isAxiosError } from 'axios';
+import { useTranslations } from '@/lib/i18n-simple';
 import { loginSchema, LoginFormData } from '@/lib/validations';
 import { useAuth } from '@/hooks';
 import { Button } from '@/components/ui/button';
@@ -14,20 +15,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import Link from 'next/link';
 
 export function LoginForm() {
-  const t = (key: string) => {
-    const translations: Record<string, string> = {
-      'loginTitle': 'Bem-vindo de volta',
-      'loginSubtitle': 'Entre com suas credenciais',
-      'email': 'Email',
-      'password': 'Senha',
-      'login': 'Entrar',
-      'dontHaveAccount': 'Não tem uma conta?',
-      'register': 'Cadastrar',
-      'loginError': 'Email ou senha inválidos',
-      'loading': 'Carregando...',
-    };
-    return translations[key] || key;
-  };
+  const t = useTranslations('auth');
+  const tCommon = useTranslations('common');
   const router = useRouter();
   const { login } = useAuth();
   const [error, setError] = useState<string | null>(null);
@@ -94,7 +83,7 @@ export function LoginForm() {
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? t('loading') : t('login')}
+            {isSubmitting ? tCommon('loading') : t('login')}
           </Button>
           <p className="text-sm text-center text-muted-foreground">
             {t('dontHaveAccount')}{' '}

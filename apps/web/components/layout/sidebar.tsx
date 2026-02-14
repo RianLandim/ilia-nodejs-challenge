@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useTranslations } from '@/lib/i18n-simple';
 import { cn } from '@/lib/utils';
 import { LayoutDashboard, Receipt } from 'lucide-react';
+import { LanguageSwitcher } from './language-switcher';
 
 const navigation = [
   {
@@ -31,8 +32,8 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="w-64 border-r border-border/80 bg-muted/30 min-h-[calc(100vh-4rem)]">
-      <nav className="p-4 space-y-1">
+    <aside className="flex w-64 flex-col border-r border-border/80 bg-muted/30 min-h-[calc(100vh-4rem)]">
+      <nav className="flex-1 space-y-1 p-4">
         {navigation.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
@@ -54,6 +55,9 @@ export function Sidebar() {
           );
         })}
       </nav>
+      <div className="border-t border-border/80 p-4">
+        <LanguageSwitcher />
+      </div>
     </aside>
   );
 }

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { QueryProvider } from "@/providers/query-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
+import { LocaleProvider } from "@/lib/i18n/locale-context";
 import { AuthProvider } from "@/lib/auth";
 import "./globals.css";
 
@@ -33,10 +34,12 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <QueryProvider>
-            <AuthProvider>
-              {children}
-              <Toaster />
-            </AuthProvider>
+            <LocaleProvider>
+              <AuthProvider>
+                {children}
+                <Toaster />
+              </AuthProvider>
+            </LocaleProvider>
           </QueryProvider>
         </ThemeProvider>
       </body>
