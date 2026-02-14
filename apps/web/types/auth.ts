@@ -1,3 +1,9 @@
+/** Payload do JWT emitido pelo ms-users (sub = userId) */
+export interface JwtPayload {
+  sub: string;
+  email?: string;
+}
+
 export interface User {
   id: string;
   first_name: string;

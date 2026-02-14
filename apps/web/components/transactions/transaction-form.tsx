@@ -3,6 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import { isAxiosError } from 'axios';
 import { useTranslations } from '@/lib/i18n-simple';
 import { createTransactionSchema, CreateTransactionFormData } from '@/lib/validations';
 import { useCreateTransaction } from '@/hooks';
@@ -37,8 +38,12 @@ export function TransactionForm() {
       await createTransaction.mutateAsync(data);
       toast.success(t('createSuccess'));
       router.push('/dashboard/transactions');
-    } catch (err: any) {
-      toast.error(err.response?.data?.message || t('createError'));
+    } catch (err: unknown) {
+      const message =
+        isAxiosError(err) && typeof err.response?.data === 'object' && err.response.data !== null && 'message' in err.response.data
+          ? String((err.response.data as { message: unknown }).message)
+          : t('createError');
+      toast.error(message);
     }
   };
 

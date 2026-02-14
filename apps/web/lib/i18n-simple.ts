@@ -53,9 +53,11 @@ const translations = {
   },
 } as const;
 
-export function useTranslations(namespace: keyof typeof translations) {
-  return (key: string) => {
-    const ns = translations[namespace] as any;
-    return ns?.[key] || key;
+type TranslationNamespace = keyof typeof translations;
+
+export function useTranslations(namespace: TranslationNamespace) {
+  return (key: string): string => {
+    const ns = translations[namespace] as Record<string, string>;
+    return ns[key] ?? key;
   };
 }

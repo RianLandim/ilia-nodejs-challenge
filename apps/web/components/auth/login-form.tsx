@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { isAxiosError } from 'axios';
 import { loginSchema, LoginFormData } from '@/lib/validations';
 import { useAuth } from '@/hooks';
 import { Button } from '@/components/ui/button';
@@ -44,8 +45,12 @@ export function LoginForm() {
       setError(null);
       await login(data);
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.response?.data?.message || t('loginError'));
+    } catch (err: unknown) {
+      const message =
+        isAxiosError(err) && typeof err.response?.data === 'object' && err.response.data !== null && 'message' in err.response.data
+          ? String((err.response.data as { message: unknown }).message)
+          : t('loginError');
+      setError(message);
     }
   };
 

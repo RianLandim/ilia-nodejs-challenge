@@ -1,15 +1,13 @@
-import { NextResponse } from 'next/server';
-import { getAuthCookie } from '@/lib/auth/cookie';
+import { NextResponse } from "next/server";
+import { getAuthCookie } from "@/lib/auth/cookie";
+import type { Transaction } from "@/types";
 
 export async function GET() {
   try {
     const token = await getAuthCookie();
 
     if (!token) {
-      return NextResponse.json(
-        { message: 'Não autenticado' },
-        { status: 401 }
-      );
+      return NextResponse.json({ message: "Não autenticado" }, { status: 401 });
     }
 
     // Get all transactions
@@ -24,11 +22,10 @@ export async function GET() {
       return NextResponse.json(data, { status: response.status });
     }
 
-    const transactions = await response.json();
+    const transactions = (await response.json()) as Transaction[];
 
-    // Calculate balance
-    const balance = transactions.reduce((acc: number, transaction: any) => {
-      if (transaction.type === 'CREDIT') {
+    const balance = transactions.reduce((acc: number, transaction: Transaction) => {
+      if (transaction.type === "CREDIT") {
         return acc + transaction.amount;
       } else {
         return acc - transaction.amount;
@@ -37,10 +34,7 @@ export async function GET() {
 
     return NextResponse.json({ balance });
   } catch (error) {
-    console.error('Get balance error:', error);
-    return NextResponse.json(
-      { message: 'Erro ao buscar saldo' },
-      { status: 500 }
-    );
+    console.error("Get balance error:", error);
+    return NextResponse.json({ message: "Erro ao buscar saldo" }, { status: 500 });
   }
 }

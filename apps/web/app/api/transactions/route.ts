@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthCookie } from "@/lib/auth/cookie";
+import type { JwtPayload } from "@/types";
 
 export async function GET(request: NextRequest) {
   try {
@@ -41,9 +42,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Get userId from token
-    const payload = JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());
+    const payload = JSON.parse(
+      Buffer.from(token.split(".")[1], "base64").toString()
+    ) as JwtPayload;
 
-    const body = await request.json();
+    const body = (await request.json()) as { amount: number; type: string };
 
     const response = await fetch(`${process.env.MS_WALLET_URL}/transactions`, {
       method: "POST",

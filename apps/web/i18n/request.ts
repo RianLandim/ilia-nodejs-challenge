@@ -1,12 +1,15 @@
 import { getRequestConfig } from 'next-intl/server';
-import { locales } from './config';
+import { locales, defaultLocale, type Locale } from './config';
+
+function isLocale(value: string): value is Locale {
+  return (locales as readonly string[]).includes(value);
+}
 
 export default getRequestConfig(async ({ requestLocale }) => {
   let locale = await requestLocale;
 
-  // Ensure that a valid locale is used
-  if (!locale || !locales.includes(locale as any)) {
-    locale = 'pt-BR';
+  if (!locale || !isLocale(locale)) {
+    locale = defaultLocale;
   }
 
   return {

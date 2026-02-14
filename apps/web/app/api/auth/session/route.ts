@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAuthCookie } from '@/lib/auth/cookie';
+import type { JwtPayload } from '@/types';
 
 export async function GET() {
   try {
@@ -14,7 +15,7 @@ export async function GET() {
 
     const payload = JSON.parse(
       Buffer.from(token.split('.')[1], 'base64').toString()
-    );
+    ) as JwtPayload;
     const userId = payload.sub;
 
     // Buscar dados completos do usuário no ms-users
@@ -47,7 +48,7 @@ export async function GET() {
       try {
         const payload = JSON.parse(
           Buffer.from(token.split('.')[1], 'base64').toString()
-        );
+        ) as JwtPayload;
         return NextResponse.json({
           user: {
             id: payload.sub,
