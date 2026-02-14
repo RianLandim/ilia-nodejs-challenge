@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/lib/i18n-simple';
 import { TransactionList } from '@/components/transactions/transaction-list';
 import { TransactionFilters } from '@/components/transactions/transaction-filters';
 import { Button } from '@/components/ui/button';

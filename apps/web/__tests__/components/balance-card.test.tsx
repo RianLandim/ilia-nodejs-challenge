@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import { BalanceCard } from '@/components/dashboard/balance-card';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-// Mock next-intl
-vi.mock('next-intl', () => ({
+// Mock i18n-simple
+vi.mock('@/lib/i18n-simple', () => ({
   useTranslations: () => (key: string) => key,
 }));
 
@@ -27,6 +27,6 @@ describe('BalanceCard', () => {
       </QueryClientProvider>
     );
 
-    expect(screen.getByText('dashboard.balance')).toBeInTheDocument();
+    expect(screen.getByText('balance')).toBeInTheDocument();
   });
 });

@@ -156,11 +156,13 @@ apps/web/
 
 ## Observações
 
-1. **JWT Strategy no ms-wallet**: Certifique-se de que a `JwtStrategy` está registrada no módulo do ms-wallet para que as rotas protegidas funcionem corretamente.
+1. **JWT_SECRET**: O `ms-users` e o `ms-wallet` devem usar o **mesmo** `JWT_SECRET` no `.env`, pois o token emitido no login (ms-users) é validado nas rotas do ms-wallet.
 
 2. **CORS**: Como o frontend usa BFF (Next.js API Routes), não há chamadas diretas do navegador para os microserviços, eliminando problemas de CORS.
 
 3. **Segurança**: O token JWT nunca é exposto ao cliente JavaScript, ficando armazenado em cookie httpOnly e acessível apenas pelas API Routes do Next.js.
+
+4. **i18n**: O projeto usa um helper local (`lib/i18n-simple.ts`) em vez de `next-intl` para evitar incompatibilidade com Next.js 16. Os arquivos em `i18n/locales/` podem ser usados para expandir para múltiplos idiomas no futuro.
 
 ## Próximos Passos
 
