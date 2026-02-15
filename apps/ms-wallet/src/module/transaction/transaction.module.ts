@@ -3,7 +3,6 @@ import { TransactionController } from './transaction.controller';
 import { TransactionGrpcController } from './transaction-grpc.controller';
 import { TransactionRepository } from './repository/transaction.repository';
 import { PrismaTransactionRepository } from './repository/prisma-transaction.repository';
-import { DatabaseService } from 'src/config/database.config';
 import { CreateTransactionUseCase } from './usecase/create-transaction.usecase';
 import { ListTransactionsByUserUseCase } from './usecase/list-transactions-by-user.usecase';
 import { GrpcInternalAuthGuard } from '../../common/guards/grpc-internal-auth.guard';
@@ -25,7 +24,6 @@ import { JwtStrategy } from 'src/common/strategies/jwt.strategy';
   controllers: [TransactionController, TransactionGrpcController],
   providers: [
     JwtStrategy,
-    DatabaseService,
     GrpcInternalAuthGuard,
     CreateTransactionUseCase,
     ListTransactionsByUserUseCase,

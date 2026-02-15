@@ -16,7 +16,7 @@ describe('CreateTransactionUseCase', () => {
   beforeEach(async () => {
     const mockRepository: jest.Mocked<TransactionRepository> = {
       createTransacation: jest.fn().mockResolvedValue(undefined),
-      getBalance: jest.fn().mockResolvedValue(undefined),
+      findByUserId: jest.fn().mockResolvedValue([]),
     };
 
     const module: TestingModule = await Test.createTestingModule({

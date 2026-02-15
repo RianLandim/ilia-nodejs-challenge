@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* Paleta moderna: fundo branco + azul como destaque (sem preto) */
+@theme {
+  /* Azul como cor de destaque (moderno, vibrante) */
+  --color-primary: hsl(221 83% 53%);
+  --color-primary-foreground: hsl(0 0% 100%);
+  /* Fundo sempre branco */
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(220 15% 28%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(220 15% 28%);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(220 15% 28%);
+  /* Secundário e muted: tons claros de azul */
+  --color-secondary: hsl(214 32% 96%);
+  --color-secondary-foreground: hsl(221 83% 40%);
+  --color-muted: hsl(214 25% 97%);
+  --color-muted-foreground: hsl(220 10% 46%);
+  --color-accent: hsl(214 32% 96%);
+  --color-accent-foreground: hsl(221 83% 40%);
+  /* Destrutivo e bordas */
+  --color-destructive: hsl(0 72% 51%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+  --color-border: hsl(214 22% 90%);
+  --color-input: hsl(214 22% 90%);
+  --color-ring: hsl(221 83% 53%);
+  --radius: 0.75rem;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
