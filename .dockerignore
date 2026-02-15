@@ -1,0 +1,34 @@
+# Dependencies and build outputs (rebuilt in container)
+node_modules
+**/node_modules
+.next
+**/.next
+**/dist
+**/coverage
+*.tsbuildinfo
+
+# Git and IDE
+.git
+.gitignore
+.cursor
+.vscode
+*.md
+!README.md
+
+# Env files (use compose env or secrets)
+.env
+.env.*
+!.env.example
+
+# Tests and dev
+**/__tests__
+**/*.spec.ts
+**/*.test.ts
+**/playwright-report
+**/test-results
+**/.playwright
+
+# Misc
+*.log
+.DS_Store
+*.local
