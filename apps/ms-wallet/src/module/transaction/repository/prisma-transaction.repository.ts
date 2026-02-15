@@ -17,8 +17,6 @@ export class PrismaTransactionRepository implements TransactionRepository {
     });
   }
 
-  async getBalance(): Promise<void> {}
-
   async findByUserId(
     userId: string,
     filter?: { type?: 'CREDIT' | 'DEBIT' },

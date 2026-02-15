@@ -37,7 +37,7 @@ export function TransactionForm() {
     try {
       await createTransaction.mutateAsync(data);
       toast.success(t('createSuccess'));
-      router.push('/dashboard/transactions');
+      router.push('/transactions');
     } catch (err: unknown) {
       const message =
         isAxiosError(err) && typeof err.response?.data === 'object' && err.response.data !== null && 'message' in err.response.data

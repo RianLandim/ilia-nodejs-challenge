@@ -19,7 +19,7 @@ export function RecentTransactions() {
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>{t('recentTransactions')}</CardTitle>
         <Button variant="ghost" asChild>
-          <Link href="/dashboard/transactions">{t('viewAll')}</Link>
+          <Link href="/transactions">{t('viewAll')}</Link>
         </Button>
       </CardHeader>
       <CardContent>

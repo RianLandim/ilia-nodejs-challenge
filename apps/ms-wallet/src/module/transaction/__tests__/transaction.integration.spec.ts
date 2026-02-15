@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import request from 'supertest';
+import { DatabaseModule } from 'src/config/database.module';
 import { TransactionModule } from '../transaction.module';
 import { DatabaseService } from 'src/config/database.config';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
@@ -35,6 +36,7 @@ describe('TransactionController (integration)', () => {
           isGlobal: true,
           load: [() => ({ JWT_INTERNAL_SECRET: 'test-internal-secret' })],
         }),
+        DatabaseModule,
         TransactionModule,
       ],
     })

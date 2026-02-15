@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { getAuthCookie } from "@/lib/auth/cookie";
-import type { Transaction } from "@/types";
 
 export async function GET() {
   try {
@@ -10,8 +9,7 @@ export async function GET() {
       return NextResponse.json({ message: "Não autenticado" }, { status: 401 });
     }
 
-    // Get all transactions
-    const response = await fetch(`${process.env.MS_WALLET_URL}/transactions`, {
+    const response = await fetch(`${process.env.MS_WALLET_URL}/balance`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -22,19 +20,13 @@ export async function GET() {
       return NextResponse.json(data, { status: response.status });
     }
 
-    const transactions = (await response.json()) as Transaction[];
-
-    const balance = transactions.reduce((acc: number, transaction: Transaction) => {
-      if (transaction.type === "CREDIT") {
-        return acc + transaction.amount;
-      } else {
-        return acc - transaction.amount;
-      }
-    }, 0);
-
-    return NextResponse.json({ balance });
+    const data = (await response.json()) as { balance: number };
+    return NextResponse.json(data);
   } catch (error) {
     console.error("Get balance error:", error);
-    return NextResponse.json({ message: "Erro ao buscar saldo" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Erro ao buscar saldo" },
+      { status: 500 }
+    );
   }
 }

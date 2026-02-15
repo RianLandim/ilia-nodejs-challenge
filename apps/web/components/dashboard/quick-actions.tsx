@@ -16,7 +16,7 @@ export function QuickActions() {
       </CardHeader>
       <CardContent>
         <Button asChild className="w-full">
-          <Link href="/dashboard/transactions/new">
+          <Link href="transactions/new">
             <PlusCircle className="mr-2 h-4 w-4" />
             {t('newTransaction')}
           </Link>

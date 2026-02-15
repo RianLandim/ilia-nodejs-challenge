@@ -7,7 +7,6 @@ export type TransactionFilter = {
 
 export abstract class TransactionRepository {
   abstract createTransacation(data: CreateTransactionDto): Promise<void>;
-  abstract getBalance(): Promise<void>;
   abstract findByUserId(
     userId: string,
     filter?: TransactionFilter,

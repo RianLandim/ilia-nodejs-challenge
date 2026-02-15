@@ -18,7 +18,7 @@ export default function TransactionsPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">{t('title')}</h1>
         <Button asChild>
-          <Link href="/dashboard/transactions/new">
+          <Link href="/transactions/new">
             <PlusCircle className="mr-2 h-4 w-4" />
             {t('new')}
           </Link>

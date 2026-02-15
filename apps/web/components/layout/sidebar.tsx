@@ -15,7 +15,7 @@ const navigation = [
   },
   {
     name: 'transactions',
-    href: '/dashboard/transactions',
+    href: '/transactions',
     icon: Receipt,
   },
 ];
@@ -37,7 +37,7 @@ export function Sidebar() {
         {navigation.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
-          
+
           return (
             <Link
               key={item.href}

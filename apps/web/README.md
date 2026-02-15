@@ -121,23 +121,27 @@ apps/web/
 ## Rotas
 
 ### Públicas
+
 - `/login` - Login
 - `/register` - Cadastro
 
 ### Protegidas
+
 - `/dashboard` - Visão geral (saldo + transações recentes)
-- `/dashboard/transactions` - Lista completa de transações
-- `/dashboard/transactions/new` - Nova transação
+- `/transactions` - Lista completa de transações
+- `/transactions/new` - Nova transação
 
 ## API Endpoints (BFF)
 
 ### Autenticação
+
 - `POST /api/auth/login` - Login
 - `POST /api/auth/register` - Registro
 - `POST /api/auth/logout` - Logout
 - `GET /api/auth/session` - Verificar sessão
 
 ### Transações
+
 - `GET /api/transactions?type=CREDIT|DEBIT` - Listar transações
 - `POST /api/transactions` - Criar transação
 - `GET /api/balance` - Obter saldo
