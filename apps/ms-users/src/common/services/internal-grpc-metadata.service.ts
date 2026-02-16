@@ -4,10 +4,10 @@ import { Metadata } from '@grpc/grpc-js';
 import * as jwt from 'jsonwebtoken';
 
 /**
- * Serviço que cria Metadata para chamadas gRPC internas entre microserviços,
- * incluindo o JWT interno no header Authorization.
- * Pode ser reutilizado em qualquer use case ou serviço que precise chamar
- * outros microserviços com autenticação interna.
+ * Service that creates Metadata for internal gRPC calls between microservices,
+ * including the internal JWT in the Authorization header.
+ * Can be reused in any use case or service that needs to call other
+ * microservices with internal authentication.
  */
 @Injectable()
 export class InternalGrpcMetadataService {
@@ -21,8 +21,8 @@ export class InternalGrpcMetadataService {
   }
 
   /**
-   * Cria um Metadata com Bearer token JWT interno para o userId informado.
-   * Use o retorno em chamadas gRPC que exigem autenticação interna.
+   * Creates Metadata with an internal JWT Bearer token for the given userId.
+   * Use the return value in gRPC calls that require internal authentication.
    */
   createMetadataForUser(userId: string): Metadata {
     const token = jwt.sign({ sub: userId }, this.internalSecret, {
