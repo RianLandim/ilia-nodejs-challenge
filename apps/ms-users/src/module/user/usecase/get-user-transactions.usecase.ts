@@ -1,10 +1,9 @@
 import { Injectable, Inject, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { ConfigService } from '@nestjs/config';
 import { Metadata } from '@grpc/grpc-js';
 import { GRPC_WALLET_CLIENT, WALLET_SERVICE_NAME } from '@ilia/grpc';
-import * as jwt from 'jsonwebtoken';
 import { Observable, lastValueFrom } from 'rxjs';
+import { InternalGrpcMetadataService } from '../../../common/services/internal-grpc-metadata.service';
 
 interface TransactionResponse {
   id: string;
@@ -40,7 +39,7 @@ export class GetUserTransactionsUseCase implements OnModuleInit {
 
   constructor(
     @Inject(GRPC_WALLET_CLIENT) private readonly client: ClientGrpc,
-    private readonly configService: ConfigService,
+    private readonly internalGrpcMetadata: InternalGrpcMetadataService,
   ) {}
 
   onModuleInit() {
@@ -49,15 +48,7 @@ export class GetUserTransactionsUseCase implements OnModuleInit {
   }
 
   async execute(userId: string) {
-    const internalSecret = this.configService.getOrThrow<string>(
-      'JWT_INTERNAL_SECRET',
-    );
-    const internalToken = jwt.sign({ sub: userId }, internalSecret, {
-      expiresIn: '30s',
-    });
-
-    const metadata = new Metadata();
-    metadata.add('authorization', `Bearer ${internalToken}`);
+    const metadata = this.internalGrpcMetadata.createMetadataForUser(userId);
 
     const response = await lastValueFrom(
       this.walletService.findAllTransactions({ userId }, metadata),
