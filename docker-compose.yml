@@ -1,0 +1,78 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ilia-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+
+  ms-wallet:
+    build: .
+    container_name: ilia-ms-wallet
+    working_dir: /app/apps/ms-wallet
+    command: >
+      sh -c "pnpm exec prisma db push --schema=prisma/schema.prisma --accept-data-loss
+      && node dist/src/main.js"
+    environment:
+      PORT: 3001
+      DATABASE_URL: "postgresql://wallet_user:wallet_pass@postgres:5432/wallet"
+      JWT_SECRET: ILIACHALLENGE
+      JWT_INTERNAL_SECRET: ILIACHALLENGE_INTERNAL
+      GRPC_WALLET_URL: "0.0.0.0:50052"
+    ports:
+      - "3001:3001"
+      - "50052:50052"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  ms-users:
+    build: .
+    container_name: ilia-ms-users
+    working_dir: /app/apps/ms-users
+    command: >
+      sh -c "pnpm exec prisma db push --schema=prisma/schema.prisma --accept-data-loss
+      && node dist/src/main.js"
+    environment:
+      PORT: 3002
+      DATABASE_URL: "postgresql://user:password@postgres:5432/ms_users"
+      JWT_SECRET: ILIACHALLENGE
+      JWT_INTERNAL_SECRET: ILIACHALLENGE_INTERNAL
+      GRPC_USERS_URL: "0.0.0.0:50051"
+      GRPC_WALLET_URL: "ms-wallet:50052"
+    ports:
+      - "3002:3002"
+      - "50051:50051"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ms-wallet:
+        condition: service_started
+
+  web:
+    build: .
+    container_name: ilia-web
+    working_dir: /app/apps/web
+    command: pnpm run start
+    environment:
+      NODE_ENV: production
+      MS_USERS_URL: http://ms-users:3002
+      MS_WALLET_URL: http://ms-wallet:3001
+    ports:
+      - "3000:3000"
+    depends_on:
+      - ms-users
+      - ms-wallet
+
+volumes:
+  postgres_data: {}

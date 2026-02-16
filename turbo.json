@@ -1,0 +1,41 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "globalDependencies": ["**/.env"],
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build", "proto:generate"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "env": ["NODE_ENV", "DATABASE_URL", "GRPC_*"]
+    },
+    "dev": {
+      "dependsOn": ["^build", "proto:generate"],
+      "persistent": true,
+      "cache": false
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "env": ["NODE_ENV", "DATABASE_URL"]
+    },
+    "test:cov": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "env": ["NODE_ENV", "DATABASE_URL"]
+    },
+    "format": {},
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "proto:generate": {
+      "dependsOn": ["^proto:generate"],
+      "outputs": ["src/generated/**"],
+      "inputs": ["../../packages/proto/**/*.proto"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

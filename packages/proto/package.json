@@ -1,0 +1,8 @@
+{
+  "name": "@ilia/proto",
+  "version": "0.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "index.js",
+  "files": ["**/*.proto"]
+}

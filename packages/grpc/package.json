@@ -1,0 +1,24 @@
+{
+  "name": "@ilia/grpc",
+  "type": "commonjs",
+  "version": "0.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.12.0",
+    "@grpc/proto-loader": "^0.7.13",
+    "@ilia/proto": "workspace:*",
+    "@nestjs/microservices": "^11.0.1"
+  },
+  "devDependencies": {
+    "@ilia/typescript-config": "workspace:*",
+    "@types/node": "^22.10.7",
+    "typescript": "^5.7.3"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "extends": "@ilia/typescript-config/nestjs.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "@ilia/grpc": ["../../packages/grpc/dist/index"]
+    }
+  }
+}
