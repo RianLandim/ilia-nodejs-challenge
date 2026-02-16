@@ -22,7 +22,7 @@ This repository is a **monorepo** implementing the ília Node.js challenge: a fi
 
 ```bash
 # From repo root
-docker compose up --build
+docker compose up -d
 ```
 
 - **Web**: http://localhost:3000  
