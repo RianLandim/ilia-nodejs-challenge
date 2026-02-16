@@ -1,16 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConfigService } from '@nestjs/config';
+import { Metadata } from '@grpc/grpc-js';
 import { of } from 'rxjs';
 import { GetUserTransactionsUseCase } from '../usecase/get-user-transactions.usecase';
 import { GRPC_WALLET_CLIENT } from '@ilia/grpc';
-
-jest.mock('jsonwebtoken', () => ({
-  sign: jest.fn().mockReturnValue('internal-jwt-token'),
-}));
+import { InternalGrpcMetadataService } from '../../../common/services/internal-grpc-metadata.service';
 
 describe('GetUserTransactionsUseCase', () => {
   let useCase: GetUserTransactionsUseCase;
   let mockFindAllTransactions: jest.Mock;
+  let mockCreateMetadataForUser: jest.Mock;
 
   beforeEach(async () => {
     mockFindAllTransactions = jest.fn().mockReturnValue(
@@ -22,14 +20,17 @@ describe('GetUserTransactionsUseCase', () => {
       }),
     );
 
+    const mockMetadata = new Metadata();
+    mockCreateMetadataForUser = jest.fn().mockReturnValue(mockMetadata);
+
     const mockGrpcClient = {
       getService: jest.fn().mockReturnValue({
         findAllTransactions: mockFindAllTransactions,
       }),
     };
 
-    const mockConfigService = {
-      getOrThrow: jest.fn().mockReturnValue('ILIACHALLENGE_INTERNAL'),
+    const mockInternalGrpcMetadataService = {
+      createMetadataForUser: mockCreateMetadataForUser,
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -40,8 +41,8 @@ describe('GetUserTransactionsUseCase', () => {
           useValue: mockGrpcClient,
         },
         {
-          provide: ConfigService,
-          useValue: mockConfigService,
+          provide: InternalGrpcMetadataService,
+          useValue: mockInternalGrpcMetadataService,
         },
       ],
     }).compile();
@@ -53,6 +54,7 @@ describe('GetUserTransactionsUseCase', () => {
   it('should call wallet gRPC service and return mapped transactions', async () => {
     const result = await useCase.execute('user-123');
 
+    expect(mockCreateMetadataForUser).toHaveBeenCalledWith('user-123');
     expect(mockFindAllTransactions).toHaveBeenCalledTimes(1);
     expect(mockFindAllTransactions).toHaveBeenCalledWith(
       { userId: 'user-123' },
